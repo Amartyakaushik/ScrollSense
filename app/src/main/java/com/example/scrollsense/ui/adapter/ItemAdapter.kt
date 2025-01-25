@@ -1,4 +1,4 @@
-package com.example.scrollsense.ui
+package com.example.scrollsense.ui.adapter
 
 import android.graphics.Color
 import android.text.Spannable

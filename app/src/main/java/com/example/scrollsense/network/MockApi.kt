@@ -36,12 +36,23 @@ class MockApi {
 //        }
 //    }
 
-    // temp next encounter while scrolling up only specified number of data should be shown
+//    // temp next encounter while scrolling up only specified number of data should be shown
+//    private fun generateMockData(id: Int, direction: String): List<Item> {
+//        return if (direction == "up") {
+//            (id-20 until id).map { Item(it, "Item $it") }.filter { it.id >= 0 }
+//        } else {
+//            (id+1..id+20).map { Item(it, "Item $it") }.filter { it.id <= 2000 }
+//        }
+//    }
+
+    // temp addin log to check range of ids being generated
     private fun generateMockData(id: Int, direction: String): List<Item> {
-        return if (direction == "up") {
-            (id-20 until id).map { Item(it, "Item $it") }.filter { it.id >= 0 }
+        val range = if (direction == "up") {
+            (id-20 until id).reversed()
         } else {
-            (id+1..id+20).map { Item(it, "Item $it") }.filter { it.id <= 2000 }
+            (id+1..id+20)
         }
+        Log.d("mockapi", "Generating items in ${direction}ward for range: $range")
+        return range.map { Item(it, "Item $it") }.filter { it.id >= 0 && it.id <= 2000 }
     }
 }

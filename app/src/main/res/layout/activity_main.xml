@@ -13,6 +13,11 @@
         android:background="#924444"
         android:queryHint="Search items..." />
 
+    <include
+        android:id="@+id/shimmerLayout"
+        layout="@layout/shimmer_layout"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
