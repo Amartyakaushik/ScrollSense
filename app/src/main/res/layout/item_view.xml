@@ -18,6 +18,5 @@
         android:background="@color/white"
         android:textSize="24sp"
         android:textAlignment="center"
-        android:text="SAMPLE"
         android:textColor="@android:color/black" />
 </androidx.cardview.widget.CardView>
