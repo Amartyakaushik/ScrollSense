@@ -1,5 +1,6 @@
 package com.example.scrollsense.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,10 +23,20 @@ class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
         if (isLoading) return
         isLoading = true
 
+        // original
         repository.fetchItems(id, direction) { newItems, hasMore ->
-            _allItems.addAll(newItems)
-            applyFilter(currentQuery)
-            _error.postValue(false)
+            if(newItems.isEmpty()){
+                _error.postValue(true)
+            }else{
+                if(direction == "up"){
+                    _allItems.addAll(0, newItems)  // Prepend items
+                }else{
+                    _allItems.addAll(newItems)  // Append items
+                }
+                applyFilter(currentQuery)
+                Log.d("ItemViewModel", "Updating LiveData with items: $newItems")
+                _error.postValue(false)
+            }
             isLoading = false
         }
     }

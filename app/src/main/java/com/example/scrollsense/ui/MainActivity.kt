@@ -1,8 +1,9 @@
 package com.example.scrollsense.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.SearchView
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +16,8 @@ import com.example.scrollsense.network.MockApi
 import com.example.scrollsense.viewmodel.ItemViewModel
 //import com.google.android.ads.mediationtestsuite.viewmodels.ViewModelFactory
 import com.example.scrollsense.viewmodel.ViewModelFactory
+import kotlin.math.log
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
@@ -31,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 //        viewModel = ViewModelProvider(this, ViewModelFactory(ItemRepository(MockApi()))).get(ItemViewModel::class.java)
 //        adapter = ItemAdapter("")
 
+        viewModel.loadItems(0, "down") // Ensure this is called to load initial data
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
@@ -51,8 +55,20 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        // ORIGINAL
+//        viewModel.filteredItems.observe(this, Observer { items ->
+//            Log.d("MainActivity", "Items received: ${items.size}")
+//            adapter.submitList(items)
+//        })
+
+        // cross check
         viewModel.filteredItems.observe(this, Observer { items ->
+            Log.d("MainActivity", "Items received: ${items.size}")
+            val previousSize = adapter.items.size
             adapter.submitList(items)
+            if (items.size > previousSize) {
+                adapter.notifyItemRangeInserted(0, items.size - previousSize)
+            }
         })
 
         viewModel.error.observe(this, Observer { error ->
@@ -73,7 +89,7 @@ class MainActivity : AppCompatActivity() {
 
                 if (dy > 0 && lastVisibleItem >= totalItemCount - 1) {
                     val lastId = adapter.items.lastOrNull()?.id ?: 0
-                    viewModel.loadItems(lastId, "down")
+                    viewModel.loadItems(lastId,"down")
                 } else if (dy < 0 && firstVisibleItem <= 0) {
                     val firstId = adapter.items.firstOrNull()?.id ?: 0
                     viewModel.loadItems(firstId, "up")
