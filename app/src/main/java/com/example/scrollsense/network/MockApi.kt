@@ -48,11 +48,12 @@ class MockApi {
     // temp addin log to check range of ids being generated
     private fun generateMockData(id: Int, direction: String): List<Item> {
         val range = if (direction == "up") {
-            (id-20 until id).reversed()
+            (id-20 until id)
+//            (id until id-20).reversed()
         } else {
             (id+1..id+20)
         }
         Log.d("mockapi", "Generating items in ${direction}ward for range: $range")
-        return range.map { Item(it, "Item $it") }.filter { it.id >= 0 && it.id <= 2000 }
+        return range.map { Item(it, "Item $it") }.filter { it.id > 0 && it.id <= 2000 }
     }
 }

@@ -34,9 +34,11 @@ class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
                 if(direction == "up"){
 //                    _allItems.addAll(0, newItems)  // Prepend items
 //                    _allItems.addAll(newItems)  // Prepend items
+                    _allItems.clear()
                     _allItems.addAll(0,newItems)
                     Log.d("ivm", "prependitems = $newItems")
                 }else{
+                    _allItems.clear()
                     _allItems.addAll(newItems)  // Append items
                     Log.d("ivm", "append = $newItems")
                 }

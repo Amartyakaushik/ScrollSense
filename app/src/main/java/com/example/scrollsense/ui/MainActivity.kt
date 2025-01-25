@@ -121,38 +121,40 @@ class MainActivity : AppCompatActivity() {
                 val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
                 val firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
 
-//                if (dy > 0 && lastVisibleItem >= totalItemCount - 1) {
-//                    val lastId = adapter.items.lastOrNull()?.id ?: 0
-//                    Log.d("main", "direction down Loading down from1 ID: $lastId")
-//                    startLoading() // shimmer effect till the data is loaded
-//                    viewModel.loadItems(lastId,"down")
-//
-//                    // // Upward Scroll Condition
-//                     }      else if (dy < 0 && firstVisibleItem == 0) {
-////                } else if (dy < 0 && firstVisibleItem <= 5 && !viewModel.isLoading) {  // before <= 0
-//                    val firstId = adapter.items.firstOrNull()?.id ?: 0
-////                    if(firstId > 1){ // Ensure not fetching below 0 or fetching a batch of items
-//                        Log.d("main", "direction up Loading up from2 ID: $firstId")
-//
-//                        startLoading() // shimmer effect till the data is loaded
-//                        viewModel.loadItems(firstId, "up")
-////                    }
-//                }
                 if (dy > 0 && lastVisibleItem >= totalItemCount - 1) {
                     val lastId = adapter.items.lastOrNull()?.id ?: 0
-                    if (lastId < 2000) {
-                        Log.d("main", "direction down Loading down from ID: $lastId")
-                        startLoading()
-                        viewModel.loadItems(lastId, "down")
-                    }
-                } else if (dy < 0 && firstVisibleItem == 0) {
+                    Log.d("main", "direction down Loading down from1 ID: $lastId")
+                    startLoading() // shimmer effect till the data is loaded
+                    viewModel.loadItems(lastId,"down")
+
+                    // // Upward Scroll Condition
+                     }      else if (dy < 0 && firstVisibleItem == 0) {
+//                } else if (dy < 0 && firstVisibleItem <= 5 && !viewModel.isLoading) {  // before <= 0
                     val firstId = adapter.items.firstOrNull()?.id ?: 0
-                    if (firstId > 20) {
-                        Log.d("main", "direction up Loading up from ID: $firstId")
-                        startLoading()
+                    if(firstId > 0){ // Ensure not fetching below 0 or fetching a batch of items
+                        Log.d("main", "direction up Loading up from2 ID: $firstId")
+
+                        startLoading() // shimmer effect till the data is loaded
                         viewModel.loadItems(firstId, "up")
                     }
                 }
+//                if (dy > 0 && lastVisibleItem >= totalItemCount - 1) {
+//                    val lastId = adapter.items.lastOrNull()?.id ?: 0
+//                    if (lastId < 2000) {
+//                        Log.d("main", "direction down Loading down from ID: $lastId")
+//                        startLoading()
+//                        viewModel.loadItems(lastId, "down")
+//                    }
+//                } else if (dy < 0 && firstVisibleItem == 0) {
+//                    val firstId = adapter.items.firstOrNull()?.id ?: 0
+//                    if (firstId > 20) {
+//                        Log.d("main", "direction up Loading up from ID: $firstId")
+//                        startLoading()
+//                        viewModel.loadItems(firstId, "up")
+//                    }
+//                }
+
+
 
             }
         })
