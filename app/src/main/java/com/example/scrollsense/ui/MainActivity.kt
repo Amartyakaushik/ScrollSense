@@ -50,6 +50,8 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         val searchView = findViewById<SearchView>(R.id.searchView)
+        searchView.queryHint = "Search Items..." // providing qurey hint
+//        searchView.
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener  {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false

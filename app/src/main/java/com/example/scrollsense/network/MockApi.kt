@@ -3,7 +3,7 @@ package com.example.scrollsense.network
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import com.example.scrollsense.model.Item
+import com.example.scrollsense.model.dataClass.Item
 
 class MockApi {
 

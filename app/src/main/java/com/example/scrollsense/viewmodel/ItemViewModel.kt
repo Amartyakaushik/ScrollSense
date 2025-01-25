@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.scrollsense.model.Item
+import com.example.scrollsense.model.dataClass.Item
 import com.example.scrollsense.network.ItemRepository
 
 class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
@@ -42,6 +42,7 @@ class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
                     _allItems.addAll(newItems)  // Append items
                     Log.d("ivm", "append = $newItems")
                 }
+                // Apply current filter to new items immediately
                 applyFilter(currentQuery)
                 Log.d("ItemViewModel", "Updating LiveData with items: $newItems")
                 _error.postValue(false)
@@ -87,7 +88,7 @@ class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
 ////import androidx.lifecycle.LiveData
 ////import androidx.lifecycle.MutableLiveData
 ////import androidx.lifecycle.ViewModel
-////import com.example.scrollsense.model.Item
+////import com.example.scrollsense.model.dataClass.Item
 ////import com.example.scrollsense.network.ItemRepository
 //
 //class ItemViewModel(private val repository: ItemRepository) : ViewModel() {

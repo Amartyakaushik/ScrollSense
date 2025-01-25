@@ -1,5 +1,5 @@
 package com.example.scrollsense.network
-import com.example.scrollsense.model.Item
+import com.example.scrollsense.model.dataClass.Item
 
 
 class ItemRepository(private val api: MockApi) {
@@ -12,7 +12,7 @@ class ItemRepository(private val api: MockApi) {
 //
 //import androidx.lifecycle.LiveData
 //import androidx.lifecycle.MutableLiveData
-//import com.example.scrollsense.model.Item
+//import com.example.scrollsense.model.dataClass.Item
 //
 //class ItemRepository(private val api: MockApi) {
 //

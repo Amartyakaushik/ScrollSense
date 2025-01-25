@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scrollsense.R
-import com.example.scrollsense.model.Item
+import com.example.scrollsense.model.dataClass.Item
 
 class ItemAdapter(private var query: String) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
@@ -41,7 +41,7 @@ class ItemAdapter(private var query: String) : RecyclerView.Adapter<ItemAdapter.
             val startIndex = item.title.indexOf(query, ignoreCase = true)
             if (startIndex >= 0) {
                 spannable.setSpan(
-                    ForegroundColorSpan(Color.YELLOW),
+                    ForegroundColorSpan(Color.BLUE),
                     startIndex,
                     startIndex + query.length,
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
