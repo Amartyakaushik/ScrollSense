@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,9 +13,10 @@ import com.example.scrollsense.databinding.ActivityMainBinding
 import com.example.scrollsense.network.ItemRepository
 import com.example.scrollsense.network.MockApi
 import com.example.scrollsense.viewmodel.ItemViewModel
-//import com.google.android.ads.mediationtestsuite.viewmodels.ViewModelFactory
 import com.example.scrollsense.viewmodel.ViewModelFactory
-import kotlin.math.log
+//import com.google.android.ads.mediationtestsuite.viewmodels.ViewModelFactory
+//import androidx.lifecycle.Observer
+//import kotlin.math.log
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
