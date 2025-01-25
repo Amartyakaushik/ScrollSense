@@ -62,18 +62,18 @@ class MainActivity : AppCompatActivity() {
 //        })
 
         // cross check
-        viewModel.filteredItems.observe(this, Observer { items ->
+        viewModel.filteredItems.observe(this) { items ->
             Log.d("MainActivity", "Items received: ${items.size}")
             val previousSize = adapter.items.size
             adapter.submitList(items)
             if (items.size > previousSize) {
                 adapter.notifyItemRangeInserted(0, items.size - previousSize)
             }
-        })
+        }
 
-        viewModel.error.observe(this, Observer { error ->
+        viewModel.error.observe(this) { error ->
             (binding.errorMessage).visibility = if (error) View.VISIBLE else View.GONE
-        })
+        }
 
         setupPagination(recyclerView)
     }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ScrollSense</string>
+    <string name="error_msg">Error loading data</string>
 </resources>
