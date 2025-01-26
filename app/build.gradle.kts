@@ -54,20 +54,20 @@ dependencies {
 
 
     val lifecycle_version = "2.8.7"
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
 
 //    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
 //    implementation (androidx.lifecycle:lifecycle-livedata-ktx:2.4.0)
 //    implementation (androidx.recyclerview:recyclerview:1.2.1)
-    implementation ("com.facebook.shimmer:shimmer:0.5.0")
+    implementation (libs.shimmer)
 //    implementation("com.google.android.gms:play-services-ads:23.6.0")
 
 //    implementation fd(androidx.recyclerview:recyclerview:1.4.0)
 //    // For control over item selection of both touch and mouse driven selection
 //    implementation (androidx.recyclerview:recyclerview-selection:1.1.0)
     val lottieVersion = "3.4.0"
-    implementation ("com.airbnb.android:lottie:$lottieVersion")
+    implementation (libs.lottie)
 
 }
