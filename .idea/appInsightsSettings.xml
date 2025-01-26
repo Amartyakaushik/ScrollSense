@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.scrollsense" />
+                  <option name="mobileSdkAppId" value="1:103538734025:android:8006d8c58431e71bab6e18" />
+                  <option name="projectId" value="scroll-sense" />
+                  <option name="projectNumber" value="103538734025" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

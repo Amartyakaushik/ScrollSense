@@ -1,7 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-//    alias(libs.plugins.kotlin.kapt)
+    id("com.google.gms.google-services")
+
+//    id("com.google.gms.google-services")
 }
 
 android {
@@ -37,6 +39,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+
     }
 }
 
@@ -47,27 +50,22 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-//    implementation(libs.mediation.test.suite)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
 
-//    val lifecycle_version = "2.8.7"
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
-//    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
-//    implementation (androidx.lifecycle:lifecycle-livedata-ktx:2.4.0)
-//    implementation (androidx.recyclerview:recyclerview:1.2.1)
     implementation (libs.shimmer)
-//    implementation("com.google.android.gms:play-services-ads:23.6.0")
-
-//    implementation fd(androidx.recyclerview:recyclerview:1.4.0)
-//    // For control over item selection of both touch and mouse driven selection
-//    implementation (androidx.recyclerview:recyclerview-selection:1.1.0)
-    val lottieVersion = "3.4.0"
     implementation (libs.lottie)
+
+    implementation(platform(libs.firebase.bom.v3380))
+    implementation(libs.firebase.analytics)
+//    implementation(platform(libs.firebase.bom))
+//////    // Add Firebase Analytics or other Firebase products you want to use
+//    implementation(libs.firebase.analytics.ktx)
 
 }

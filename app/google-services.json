@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "103538734025",
+    "project_id": "scroll-sense",
+    "storage_bucket": "scroll-sense.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103538734025:android:8006d8c58431e71bab6e18",
+        "android_client_info": {
+          "package_name": "com.example.scrollsense"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU1HtcDTrscrdFBw_Dn72XgMNPLbf38a8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
