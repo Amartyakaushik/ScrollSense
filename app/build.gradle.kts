@@ -53,7 +53,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
 
-    val lifecycle_version = "2.8.7"
+//    val lifecycle_version = "2.8.7"
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
