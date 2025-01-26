@@ -41,7 +41,7 @@ class ItemAdapter(private var query: String) : RecyclerView.Adapter<ItemAdapter.
             val startIndex = item.title.indexOf(query, ignoreCase = true)
             if (startIndex >= 0) {
                 spannable.setSpan(
-                    ForegroundColorSpan(Color.BLUE),
+                    ForegroundColorSpan(Color.GRAY),
                     startIndex,
                     startIndex + query.length,
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE

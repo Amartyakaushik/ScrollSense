@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">ScrollSense</string>
+    <string name="app_name">Scroll Sense</string>
     <string name="error_msg">Error loading data</string>
     <string name="appname">Scroll Sense</string>
+    <string name="tagline">Scroll Smarter, Not Harder</string>
+    <string name="scroll_icon">Scroll_icon</string>
 </resources>

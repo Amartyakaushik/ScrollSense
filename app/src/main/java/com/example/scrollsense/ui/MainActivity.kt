@@ -20,15 +20,8 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-//import com.example.scrollsense.databinding.ShimmerLayoutBinding
-
-//import com.google.android.ads.mediationtestsuite.viewmodels.ViewModelFactory
-//import androidx.lifecycle.Observer
-//import kotlin.math.log
-
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
     private lateinit var viewModel: ItemViewModel
     private lateinit var adapter: ItemAdapter
     private lateinit var shimmerLayout : ShimmerFrameLayout
@@ -41,10 +34,8 @@ class MainActivity : AppCompatActivity() {
         shimmerLayout = findViewById(R.id.shimmerLayout)
         viewModel = ViewModelProvider(this, ViewModelFactory(ItemRepository(MockApi())) ).get(ItemViewModel::class.java)
         adapter = ItemAdapter("")
-//        viewModel = ViewModelProvider(this, ViewModelFactory(ItemRepository(MockApi()))).get(ItemViewModel::class.java)
-//        adapter = ItemAdapter("")
 
-        viewModel.loadItems(0, "down") // Ensure this is called to load initial data
+        viewModel.loadItems(0, "down") // To load initial data
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
@@ -73,7 +64,6 @@ class MainActivity : AppCompatActivity() {
 //            adapter.submitList(items)
 //        })
 
-        // cross check
         viewModel.filteredItems.observe(this) { items ->
             Log.d("MainActivity", "Items received: ${items.size}")
             val previousSize = adapter.items.size
