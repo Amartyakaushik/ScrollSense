@@ -1,5 +1,5 @@
 package com.example.scrollsense.viewmodel
-//
+
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,143 +7,75 @@ import androidx.lifecycle.ViewModel
 import com.example.scrollsense.model.dataClass.Item
 import com.example.scrollsense.network.ItemRepository
 
+// ViewModel class for managing the items and their filtered state
 class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
 
+    // Mutable list to hold all items, initially empty
     private val _allItems = mutableListOf<Item>()
+
+    // LiveData to observe the filtered list of items
     private val _filteredItems = MutableLiveData<List<Item>>()
     val filteredItems: LiveData<List<Item>> get() = _filteredItems
 
+    // LiveData to observe error state
     private val _error = MutableLiveData<Boolean>()
     val error: LiveData<Boolean> get() = _error
 
+    // Flag to track loading state
     var isLoading = false
-//    private var isLoading = false
+
+    // To keep track of the current filter query
     private var currentQuery: String = ""
 
+    // Function to load items from repository, with pagination (up or down direction)
     fun loadItems(id: Int, direction: String) {
+        // Prevent multiple calls while already loading
         if (isLoading) return
         isLoading = true
 
         Log.d("ivm", "loadItems: direction: $direction, id= $id")
-        // original
+
+        // Fetch items from the repository, passing a callback to handle the response
         repository.fetchItems(id, direction) { newItems, hasMore ->
+            // If no items are fetched, show an error
             if(newItems.isEmpty()){
                 _error.postValue(true)
                 Log.d("ivm", "no items fetched")
-            }else{
-                if(direction == "up"){
-//                    _allItems.addAll(0, newItems)  // Prepend items
-//                    _allItems.addAll(newItems)  // Prepend items
+            } else {
+                // Handle appending or prepending items based on the direction
+                if (direction == "up") {
                     _allItems.clear()
-                    _allItems.addAll(0,newItems)
+                    _allItems.addAll(0, newItems)  // Prepend items to the list
                     Log.d("ivm", "prependitems = $newItems")
-                }else{
+                } else {
                     _allItems.clear()
-                    _allItems.addAll(newItems)  // Append items
+                    _allItems.addAll(newItems)  // Append items to the list
                     Log.d("ivm", "append = $newItems")
                 }
-                // Apply current filter to new items immediately
+                // Apply the current filter to newly loaded items
                 applyFilter(currentQuery)
                 Log.d("ItemViewModel", "Updating LiveData with items: $newItems")
                 _error.postValue(false)
             }
-            isLoading = false
+            isLoading = false  // Set loading to false after data is fetched
         }
-
-//        // to encounter Up Scroll issue
-//        repository.fetchItems(id, direction).observeForever { newItems ->
-//            if (newItems.isNotEmpty()) {
-//                if (direction == "up") {
-//                    _allItems.value = (_allItems.value ?: listOf()).toMutableList().apply {
-//                        addAll(0, newItems) // Prepend items
-//                    }
-//                } else {
-//                    _allItems.value = (_allItems.value ?: listOf()).toMutableList().apply {
-//                        addAll(newItems) // Append items
-//                    }
-//                }
-//            }
-//            isLoading = false
-//        }
     }
 
+    // Function to filter items based on a query string
     fun filterItems(query: String) {
         currentQuery = query
-        applyFilter(query)
+        applyFilter(query)  // Apply the filter immediately
     }
 
+    // Helper function to apply the current filter to the list of items
     private fun applyFilter(query: String) {
+        // Filter the items based on the title matching the query (case-insensitive)
         val filteredList = if (query.isEmpty()) {
-            _allItems
+            _allItems  // If the query is empty, show all items
         } else {
             _allItems.filter { it.title.contains(query, ignoreCase = true) }
         }
+        // Post the filtered list to the LiveData
         _filteredItems.postValue(filteredList)
     }
 }
-//
-////package com.example.scrollsense.viewmodel
-//
-////import android.util.Log
-////import androidx.lifecycle.LiveData
-////import androidx.lifecycle.MutableLiveData
-////import androidx.lifecycle.ViewModel
-////import com.example.scrollsense.model.dataClass.Item
-////import com.example.scrollsense.network.ItemRepository
-//
-//class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
-//
-//    private val _allItems = MutableLiveData<List<Item>>(emptyList()) // Observable list
-//    val allItems: LiveData<List<Item>> get() = _allItems
-//
-//    private val _filteredItems = MutableLiveData<List<Item>>()
-//    val filteredItems: LiveData<List<Item>> get() = _filteredItems
-//
-//    private val _error = MutableLiveData<Boolean>()
-//    val error: LiveData<Boolean> get() = _error
-//
-//    var isLoading = false
-//    private var currentQuery: String = ""
-//
-//    fun loadItems(id: Int, direction: String) {
-//        if (isLoading) return
-//        isLoading = true
-//
-//        Log.d("ItemViewModel", "loadItems: direction=$direction, id=$id")
-//
-//        // Fetch items from the repository
-//        repository.fetchItems(id, direction).observeForever { newItems ->
-//            if (newItems.isNullOrEmpty()) {
-//                _error.postValue(true)
-//                Log.d("ItemViewModel", "No items fetched")
-//            } else {
-//                val currentList = _allItems.value.orEmpty().toMutableList()
-//                if (direction == "up") {
-//                    currentList.addAll(0, newItems) // Prepend items
-//                    Log.d("ItemViewModel", "Prepended items: $newItems")
-//                } else {
-//                    currentList.addAll(newItems) // Append items
-//                    Log.d("ItemViewModel", "Appended items: $newItems")
-//                }
-//                _allItems.postValue(currentList)
-//                applyFilter(currentQuery) // Apply the current filter to update filteredItems
-//                _error.postValue(false)
-//            }
-//            isLoading = false
-//        }
-//    }
-//
-//    fun filterItems(query: String) {
-//        currentQuery = query
-//        applyFilter(query)
-//    }
-//
-//    private fun applyFilter(query: String) {
-//        val filteredList = if (query.isEmpty()) {
-//            _allItems.value.orEmpty()
-//        } else {
-//            _allItems.value.orEmpty().filter { it.title.contains(query, ignoreCase = true) }
-//        }
-//        _filteredItems.postValue(filteredList)
-//    }
-//}

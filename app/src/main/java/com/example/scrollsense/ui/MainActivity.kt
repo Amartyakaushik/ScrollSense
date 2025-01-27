@@ -20,67 +20,81 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+
 class MainActivity : AppCompatActivity() {
+
+    // ViewBinding for accessing views directly
     private lateinit var binding: ActivityMainBinding
+
+    // ViewModel for managing UI-related data
     private lateinit var viewModel: ItemViewModel
+
+    // Adapter for populating RecyclerView
     private lateinit var adapter: ItemAdapter
-    private lateinit var shimmerLayout : ShimmerFrameLayout
+
+    // Shimmer effect layout to indicate loading
+    private lateinit var shimmerLayout: ShimmerFrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Inflate the layout using ViewBinding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Initialize ShimmerFrameLayout
         shimmerLayout = findViewById(R.id.shimmerLayout)
-        viewModel = ViewModelProvider(this, ViewModelFactory(ItemRepository(MockApi())) ).get(ItemViewModel::class.java)
+
+        // Set up ViewModel with a factory for dependency injection
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(ItemRepository(MockApi()))
+        ).get(ItemViewModel::class.java)
+
+        // Initialize RecyclerView adapter with an empty query
         adapter = ItemAdapter("")
 
-        viewModel.loadItems(0, "down") // To load initial data
+        // Load initial data (page 0, downward direction)
+        viewModel.loadItems(0, "down")
+
+        // Set up RecyclerView with LinearLayoutManager and attach the adapter
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
+        // Set up search functionality
         val searchView = findViewById<SearchView>(R.id.searchView)
-        searchView.queryHint = "Search Items..." // providing qurey hint
-//        searchView.
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener  {
+        searchView.queryHint = "Search Items..."
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
+                return false // No action required on query submit
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 val query = newText.orEmpty()
-//                adapter = ItemAdapter(query)
-//                recyclerView.adapter = adapter
-                adapter.updateQuery(query)
-                viewModel.filterItems(query)
+                adapter.updateQuery(query) // Update query in the adapter
+                viewModel.filterItems(query) // Filter items in ViewModel
                 return true
             }
         })
 
-        // ORIGINAL
-//        viewModel.filteredItems.observe(this, Observer { items ->
-//            Log.d("MainActivity", "Items received: ${items.size}")
-//            adapter.submitList(items)
-//        })
-
+        // Observe filtered items and update RecyclerView
         viewModel.filteredItems.observe(this) { items ->
             Log.d("MainActivity", "Items received: ${items.size}")
             val previousSize = adapter.items.size
-            adapter.submitList(items)
+            adapter.submitList(items) // Submit new items to the adapter
+
+            // Stop shimmer animation and hide layout
             shimmerLayout.stopShimmer()
             shimmerLayout.visibility = View.GONE
+
+            // Notify adapter about new items for smooth transition
             if (items.size > previousSize) {
                 adapter.notifyItemRangeInserted(0, items.size - previousSize)
             }
         }
 
-//        viewModel.error.observe(this) { error ->
-//            (binding.errorMessage).visibility = if (error) View.VISIBLE else View.GONE
-//            shimmerLayout.stopShimmer()
-//            shimmerLayout.visibility = View.GONE
-//        }
-
+        // Observe error state and display a message if an error occurs
         viewModel.error.observe(this) { error ->
             if (error) {
                 binding.errorMessage.visibility = View.VISIBLE
@@ -95,14 +109,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-
-//        // Start shimmer when loading data
-//        shimmerLayout.startShimmer()
-//        shimmerLayout.visibility = View.VISIBLE
+        // Start shimmer effect while loading
         startLoading()
+
+        // Enable pagination functionality
         setupPagination(recyclerView)
     }
+
+
+     // Sets up pagination by listening to RecyclerView scroll events.
 
     private fun setupPagination(recyclerView: RecyclerView) {
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -113,45 +128,28 @@ class MainActivity : AppCompatActivity() {
                 val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
                 val firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
 
+                // Load more data when scrolling down and reaching the bottom
                 if (dy > 0 && lastVisibleItem >= totalItemCount - 1) {
                     val lastId = adapter.items.lastOrNull()?.id ?: 0
-                    Log.d("main", "direction down Loading down from1 ID: $lastId")
-                    startLoading() // shimmer effect till the data is loaded
-                    viewModel.loadItems(lastId,"down")
+                    Log.d("MainActivity", "Loading more items downward from ID: $lastId")
+                    startLoading() // Show shimmer while loading
+                    viewModel.loadItems(lastId, "down")
 
-                    // // Upward Scroll Condition
-                     }      else if (dy < 0 && firstVisibleItem == 0) {
-//                } else if (dy < 0 && firstVisibleItem <= 5 && !viewModel.isLoading) {  // before <= 0
+                    // Load more data when scrolling up and reaching the top
+                } else if (dy < 0 && firstVisibleItem == 0) {
                     val firstId = adapter.items.firstOrNull()?.id ?: 0
-                    if(firstId > 0){ // Ensure not fetching below 0 or fetching a batch of items
-                        Log.d("main", "direction up Loading up from2 ID: $firstId")
-
-                        startLoading() // shimmer effect till the data is loaded
+                    if (firstId > 0) { // Ensure no invalid requests below ID 0
+                        Log.d("MainActivity", "Loading more items upward from ID: $firstId")
+                        startLoading() // Show shimmer while loading
                         viewModel.loadItems(firstId, "up")
                     }
                 }
-//                if (dy > 0 && lastVisibleItem >= totalItemCount - 1) {
-//                    val lastId = adapter.items.lastOrNull()?.id ?: 0
-//                    if (lastId < 2000) {
-//                        Log.d("main", "direction down Loading down from ID: $lastId")
-//                        startLoading()
-//                        viewModel.loadItems(lastId, "down")
-//                    }
-//                } else if (dy < 0 && firstVisibleItem == 0) {
-//                    val firstId = adapter.items.firstOrNull()?.id ?: 0
-//                    if (firstId > 20) {
-//                        Log.d("main", "direction up Loading up from ID: $firstId")
-//                        startLoading()
-//                        viewModel.loadItems(firstId, "up")
-//                    }
-//                }
-
-
-
             }
         })
     }
-// to display shimmer effect
+
+
+     // Starts the shimmer effect to indicate loading state.
     private fun startLoading() {
         shimmerLayout.startShimmer()
         shimmerLayout.visibility = View.VISIBLE

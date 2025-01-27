@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="4dp"
     android:background="@drawable/main_layout_background"
+    tools:context=".ui.MainActivity"
     android:orientation="vertical">
 
     <com.airbnb.lottie.LottieAnimationView

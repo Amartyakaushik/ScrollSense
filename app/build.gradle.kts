@@ -64,8 +64,5 @@ dependencies {
 
     implementation(platform(libs.firebase.bom.v3380))
     implementation(libs.firebase.analytics)
-//    implementation(platform(libs.firebase.bom))
-//////    // Add Firebase Analytics or other Firebase products you want to use
-//    implementation(libs.firebase.analytics.ktx)
 
 }
