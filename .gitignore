@@ -13,3 +13,22 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# NDK
+obj/
+jniLibs/
+
+# Kotlin specific
+*.kotlin_metadata
+
+# APKs and other build artifacts
+*.apk
+*.ap_
+*.dex
+*.class
+*.jar
+*.war
+*.so
+*.zip
+*.tar.gz
+*.tgz
