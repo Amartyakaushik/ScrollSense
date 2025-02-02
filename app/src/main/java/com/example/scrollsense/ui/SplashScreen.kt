@@ -9,9 +9,7 @@ import com.example.scrollsense.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
 //SplashScreen activity that displays an introductory screen for a brief period before launching the main activity.
-
 @SuppressLint("CustomSplashScreen") // Suppresses the warning for not using the new SplashScreen API
 class SplashScreen : AppCompatActivity() {
 

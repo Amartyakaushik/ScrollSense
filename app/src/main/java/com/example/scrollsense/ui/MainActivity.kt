@@ -46,10 +46,7 @@ class MainActivity : AppCompatActivity() {
         shimmerLayout = findViewById(R.id.shimmerLayout)
 
         // Set up ViewModel with a factory for dependency injection
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(ItemRepository(MockApi()))
-        ).get(ItemViewModel::class.java)
+        viewModel = ViewModelProvider(this, ViewModelFactory(ItemRepository(MockApi()))).get(ItemViewModel::class.java)
 
         // Initialize RecyclerView adapter with an empty query
         adapter = ItemAdapter("")
