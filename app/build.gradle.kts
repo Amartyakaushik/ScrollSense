@@ -44,25 +44,30 @@ android {
 }
 
 dependencies {
+    //    Core AndroidX libraries
+    implementation(libs.androidx.core.ktx) // Kotlin extensions for Android core library
+    implementation(libs.androidx.appcompat) // Support for older Android versions
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.material)// Material Design components
+    implementation(libs.androidx.activity)// Activity library for Jetpack components
+    implementation(libs.androidx.constraintlayout)// Layout manager for flexible UI design
 
+    // Testing libraries
+    testImplementation(libs.junit)// Unit testing framework
+    androidTestImplementation(libs.androidx.junit)// AndroidX JUnit for UI testing
+    androidTestImplementation(libs.androidx.espresso.core)// Espresso for UI testing automation
 
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
+    // Lifecycle components
+    implementation(libs.androidx.lifecycle.viewmodel.ktx) // ViewModel support
+    implementation(libs.androidx.lifecycle.livedata.ktx) // LiveData support
+    implementation(libs.androidx.lifecycle.runtime.ktx) // Lifecycle runtime utilities
+    // UI Enhancements
+    implementation (libs.shimmer) // Shimmer effect for loading states
+    implementation (libs.lottie) // Lottie animations for animated UI elements
 
-    implementation (libs.shimmer)
-    implementation (libs.lottie)
+    // Firebase dependencies
+    implementation(platform(libs.firebase.bom.v3380))  // Firebase BoM (manages versioning)
+    implementation(libs.firebase.analytics) // Firebase Analytics for tracking app usage
 
-    implementation(platform(libs.firebase.bom.v3380))
-    implementation(libs.firebase.analytics)
 
 }
